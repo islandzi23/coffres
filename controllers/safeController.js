@@ -5,12 +5,13 @@ const firestore = firebase.firestore();
 const createSafe = async (req, res, next) => {
     try {
         const data = (req.body);
+        var gold = "0"
+        var key = []
+        var documents = []
+
         if (data.empty || !data.password) {
             res.status(400).send("No password given");
         }
-        gold = "0"
-        key = []
-        documents = []
         if (data.gold && Number(data.gold < 0))
           res.status(400).send("you can't add negative gold");
         if (!data.gold)
