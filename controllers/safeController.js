@@ -8,14 +8,25 @@ const createSafe = async (req, res, next) => {
         if (data.empty || !data.password) {
             res.status(400).send("No password given");
         }
+        gold = "0"
+        key = []
+        documents = []
         if (data.gold && Number(data.gold < 0))
           res.status(400).send("you can't add negative gold");
         if (!data.gold)
-          data.gold = "0"
+          data.gold = gold
         if (!data.key)
-          data.key = []
+          data.key = key
+        else {
+          key.push(data.key)
+          data.key = key
+        }
         if (!data.documents)
-          data.documents = []
+          data.documents = documents
+        else {
+          documents.push(data.documents)
+          data.documents = documents
+        }
         firestore.collection('safe').add(data).then(function(docRef) {
         res.status(201).send({"id": docRef.id});
 
